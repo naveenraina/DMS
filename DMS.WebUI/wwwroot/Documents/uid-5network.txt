@@ -1,0 +1,15 @@
+public IP - 122.160.67.80
+
+
+Router - 192.168.1.1
+admin/admin
+
+steps to make IIS public
+1. make lan IP static
+2. add port forwarding rule in router to point WAN to LAN port 80 and to this static LAN IP
+3. Add Inbound rule in Windows defender Firewall to accept TCP at port 80.
+
+To make ftp server
+1. Add ftp site in IIS
+2. add port forwarding rule in router to point WAN to LAN port 21 and to static LAN IP
+3. Add Inbound rule in Windows defender Firewall to accept TCP at port 21.

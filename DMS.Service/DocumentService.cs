@@ -36,12 +36,13 @@ namespace DMS.Service
         public async Task<IQueryable<DocumentViewModel>> GetList(string email,string str)
         {
             var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
+            var cats = _context.Categories.Where(x => x.Users.UserId == user.UserId).ToList();
             var doc = from x in _context.Documents
-                        where x.UsersUserId == user.UserId
+                        where cats.Select(c => c.CategoryId).Contains(x.CategoryId)
                         select x;
             var items = from x in _context.Documents
-                        where x.UsersUserId == user.UserId                        
-            select new DocumentViewModel
+                        where cats.Select(c => c.CategoryId).Contains(x.CategoryId)
+                        select new DocumentViewModel
             {
                 DocumentId = x.DocumentId,
                 DocumentPath = x.DocumentPath,
@@ -100,7 +101,7 @@ namespace DMS.Service
                     {
                         Document item = new Document();
                         item.DocumentPath = filePath;
-                        item.DocumentName = "uid-" + user.UserId + file.FileName;
+                        item.DocumentName = file.FileName;
                         item.DocumentTags = file.FileName;//default tags given same as filename will be replaced later
                         item.CategoryId = document.CategoryId;
                         item.UsersUserId = user.UserId;
@@ -131,7 +132,7 @@ namespace DMS.Service
          */
         public string GetPath(int userId, int documentId)
         {
-            var item = _context.Documents.Where(x => x.DocumentId == documentId && x.Users.UserId == userId).FirstOrDefault();
+            var item = _context.Documents.Where(x => x.DocumentId == documentId).FirstOrDefault();
             return item.DocumentPath;
         }
 
@@ -140,7 +141,7 @@ namespace DMS.Service
          */
         public string GetName(int userId, int documentId)
         {
-            var item = _context.Documents.Where(x => x.DocumentId == documentId && x.Users.UserId == userId).FirstOrDefault();
+            var item = _context.Documents.Where(x => x.DocumentId == documentId).FirstOrDefault();
             return item.DocumentName;
         }
 

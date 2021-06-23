@@ -23,6 +23,15 @@ namespace DMS.Service
         /*
          * GET LIST OF CATEGORY
          */
+        public List<Category> GetAll()
+        {
+            var cats = _context.Categories.ToList();
+            return cats;
+        }
+
+        /*
+         * GET LIST OF CATEGORY for email
+         */
         public List<Category> GetAll(string email)
         {
             var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();

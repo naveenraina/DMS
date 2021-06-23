@@ -48,7 +48,7 @@ namespace DMS.Controllers
         public IActionResult Create()
         {
             var email = HttpContext.Session.GetString("UserEmail");
-            ViewBag.categories = _categoryService.GetAll(email);
+            ViewBag.categories = _categoryService.GetAll();
             return View();
         }
 
@@ -80,15 +80,15 @@ namespace DMS.Controllers
             int documentId = (int) id;
             int userId = (int) HttpContext.Session.GetInt32("UserId");
             var status = _documentService.DocumentPermissionRule(userId, documentId);
-            if (status) {
+            //if (status) {
                 string filePath = _documentService.GetPath(userId, documentId);
                 string fileName = _documentService.GetName(userId, documentId);
                 return await this.ReturnDocumentFileAsync(filePath, fileName);
-            } else
-            {
-                TempData["Error"] = "Docuement permission failed";
-            }
-            return RedirectToAction("Index");
+            //} else
+            //{
+            //    TempData["Error"] = "Docuement permission failed";
+            //}
+            //return RedirectToAction("Index");
         }
 
         /*
@@ -99,7 +99,7 @@ namespace DMS.Controllers
         {
             var path = Path.Combine(
                             Directory.GetCurrentDirectory(),
-                            "wwwroot\\Documents\\", fileName
+                            "wwwroot\\Documents\\", filePath.Split("\\")[2]
                            );
 
             var memory = new MemoryStream();
