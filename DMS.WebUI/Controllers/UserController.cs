@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using DMS.Data;
 using DMS.Service;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using DMS.WebUI.Models;
 
 namespace DMS.Controllers
 {
@@ -18,9 +20,11 @@ namespace DMS.Controllers
     public class UserController : Controller
     {
         private readonly UserService _userService;
+        private CategoryService _categoryService;
         public UserController(DMSContext _context, IConfiguration _config)
         {
             _userService = new UserService(_context, _config);
+            _categoryService = new CategoryService(_context);
         }
        
         /*
@@ -37,6 +41,8 @@ namespace DMS.Controllers
          */
         public IActionResult Create()
         {
+            var categories = _categoryService.GetAll();
+            ViewBag.Categories = new MultiSelectList(categories, "CategoryId", "CategoryName");            
             return View();
         }
 
@@ -44,9 +50,13 @@ namespace DMS.Controllers
          * CREATE NEW USER
          */
         [HttpPost]
-        public IActionResult Create(User user)
+        public IActionResult Create(UserModel user)
         {
-            var status = _userService.Create(user);
+            var categories = _categoryService.GetAll();
+            var status = _userService.Create(new Data.User() {
+                 UserEmail = user.UserEmail, UserName = user.UserName, password = user.password, UserRole = user.UserRole, 
+                Catgories = categories.Where(c => user.SelectedCategories.Contains(c.CategoryId)).ToList()
+            });
             if (status)
             {
                 ViewBag.success = "Created successfully";
@@ -55,6 +65,7 @@ namespace DMS.Controllers
             {
                 ViewBag.error = "Error Occurred";
             }
+            ViewBag.Categories = new MultiSelectList(categories, "CategoryId", "CategoryName");
             return View();
         }
 

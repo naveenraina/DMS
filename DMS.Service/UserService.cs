@@ -45,6 +45,7 @@ namespace DMS.Service
             item.UserEmail = user.UserEmail;
             item.password = user.password;
             item.UserRole = user.UserRole;
+            item.Catgories = user.Catgories;
             try
             {
                 _context.Users.Add(item);

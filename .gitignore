@@ -2,6 +2,12 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/.vs/DMS
+/*/bin
+/*/obj
+/DMS.Data/DMS.Data.csproj.user
+/DMS.Service/DMS.Service.csproj.user
+/packages
 /.vs/DMS/DesignTimeBuild
 /.vs/DMS/v15/Server/sqlite3
 /.vs/DMS/v16/Server/sqlite3

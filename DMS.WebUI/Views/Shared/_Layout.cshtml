@@ -89,7 +89,8 @@
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
-
+                            @if (User.IsInRole("Admin"))
+                            {
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <img src="~/images/setting.png" style="height:40px;width:40px;" />
@@ -100,61 +101,67 @@
                                 </a>
                                 <ul class="nav nav-treeview">
 
-                                    @if (User.IsInRole("Admin"))
-            {
 
-                        <li class="nav-item">
-                            <a href="/User/Create" class="nav-link">
-                                <img src="~/images/create.png" />
-                                <p>Create User</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/User/Index" class="nav-link">
-                                <img src="~/images/users.png" />
-                                <p>Manage Users</p>
-                            </a>
-                        </li>}
-                                    
-                        <li class="nav-item">
-                            <a href="/Category/Create" class="nav-link">
-                                <img src="~/images/create.png" />
-                                <p>Create Category</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/Category/Index" class="nav-link">
-                                <img src="~/images/manage.png" />
-                                <p>Manage Category</p>
-                            </a>
-                        </li>
+
+                                    <li class="nav-item">
+                                        <a href="/User/Create" class="nav-link">
+                                            <img src="~/images/create.png" />
+                                            <p>Create User</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/User/Index" class="nav-link">
+                                            <img src="~/images/users.png" />
+                                            <p>Manage Users</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="/Category/Create" class="nav-link">
+                                            <img src="~/images/create.png" />
+                                            <p>Create Category</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/Category/Index" class="nav-link">
+                                            <img src="~/images/manage.png" />
+                                            <p>Manage Category</p>
+                                        </a>
+                                    </li>
+
+
                                 </ul>
-                            </li>
-                           
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <img src="~/images/document.png" style="height:40px;width:40px;" />
-                                <p>
-                                    Document Module
-                                    <i class="fa fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="~/Document/Create" class="nav-link">
-                                        <img src="~/images/upload.png" />
-                                        <p>Upload Document</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/Document/Index" class="nav-link">
-                                        <img src="~/images/manage.png" />
-                                        <p>Manage Documents</p>
-                                    </a>
-                                </li>
 
-                            </ul>
-                        </li>
+                                
+                            </li>
+                            }
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <img src="~/images/document.png" style="height:40px;width:40px;" />
+                                    <p>
+                                        Document Module
+                                        <i class="fa fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li class="nav-item">
+                                            <a href="~/Document/Create" class="nav-link">
+                                                <img src="~/images/upload.png" />
+                                                <p>Upload Document</p>
+                                            </a>
+                                        </li>
+                                    }
+                                        <li class="nav-item">
+                                            <a href="~/Document/Index" class="nav-link">
+                                                <img src="~/images/manage.png" />
+                                                <p>Manage Documents</p>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                            </li>
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->
