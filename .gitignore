@@ -6,3 +6,10 @@
 /.vs/DMS/v15/Server/sqlite3
 /.vs/DMS/v16/Server/sqlite3
 /.vs/DMS/v16/.suo
+/DMS.Data/bin/Debug
+/DMS.Data/obj/Debug
+/DMS.Service/bin/Debug
+/DMS.Service/obj/Debug
+/DMS.WebUI/bin/Debug/netcoreapp2.0
+/DMS.WebUI/obj/Debug/netcoreapp2.0
+/DMS.WebUI/obj
