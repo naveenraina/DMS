@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
+
 namespace DMS.Controllers
 {
 
@@ -120,7 +122,8 @@ namespace DMS.Controllers
         {
             var types = GetMimeTypes();
             var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types[ext];
+            // return types[ext];
+            return MimeTypes.GetMimeType(path);
         }
         
         /*
