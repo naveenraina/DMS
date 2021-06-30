@@ -17,7 +17,12 @@ namespace DMS.Data
         {
 
         }
-      
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CategoryUser>()
+            .HasKey(x => new { x.UserId, x.CategoryId });
+        }
 
 
     }

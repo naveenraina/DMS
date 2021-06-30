@@ -3,14 +3,16 @@ using DMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(DMSContext))]
-    partial class DMSContextModelSnapshot : ModelSnapshot
+    [Migration("20210630083138_RemoveCategoryUserRelation")]
+    partial class RemoveCategoryUserRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,19 +32,6 @@ namespace DataLayer.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("DMS.Data.CategoryUser", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("CategoryId");
-
-                    b.HasKey("UserId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("CategoryUser");
                 });
 
             modelBuilder.Entity("DMS.Data.Document", b =>
@@ -94,19 +83,6 @@ namespace DataLayer.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("DMS.Data.CategoryUser", b =>
-                {
-                    b.HasOne("DMS.Data.Category", "Category")
-                        .WithMany("UserLinks")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("DMS.Data.User", "User")
-                        .WithMany("CatgoryLinks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DMS.Data.Document", b =>

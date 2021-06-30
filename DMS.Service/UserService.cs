@@ -45,12 +45,12 @@ namespace DMS.Service
             item.UserEmail = user.UserEmail;
             item.password = user.password;
             item.UserRole = user.UserRole;
-            item.Catgories = user.Catgories;
+            item.CategoryLinks = user.CategoryLinks;
             try
             {
                 _context.Users.Add(item);
                 _context.SaveChanges();
-                SendMail(user.UserName, user.UserEmail,user.password);
+                // SendMail(user.UserName, user.UserEmail,user.password);
                 status = true;
             }
             catch (Exception ex)

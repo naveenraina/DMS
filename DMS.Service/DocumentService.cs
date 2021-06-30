@@ -35,13 +35,26 @@ namespace DMS.Service
          */
         public async Task<IQueryable<DocumentViewModel>> GetList(string email,string str)
         {
-            var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
-            var cats = _context.Categories.Where(x => x.Users.UserId == user.UserId).ToList();
+            var user = _context.Users.Include(u => u.CategoryLinks).Where(x => x.UserEmail == email).FirstOrDefault();
+            IQueryable<Category> usercats;
+            if (user.UserRole == "Admin")
+            {
+                usercats = from c in _context.Categories
+                           select c;
+            }
+            else
+            {
+                usercats = from c in _context.Categories
+                           join cl in user.CategoryLinks on c.CategoryId equals cl.CategoryId
+                           where cl.UserId == user.UserId
+                           select c;
+            }
+
             var doc = from x in _context.Documents
-                        where cats.Select(c => c.CategoryId).Contains(x.CategoryId)
+                        where usercats.Select(c => c.CategoryId).Contains(x.CategoryId)
                         select x;
             var items = from x in _context.Documents
-                        where cats.Select(c => c.CategoryId).Contains(x.CategoryId)
+                        where usercats.Select(c => c.CategoryId).Contains(x.CategoryId)
                         select new DocumentViewModel
             {
                 DocumentId = x.DocumentId,

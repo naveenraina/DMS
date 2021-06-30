@@ -34,8 +34,21 @@ namespace DMS.Service
          */
         public List<Category> GetAll(string email)
         {
-            var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
-            var cats = _context.Categories.Where(x=>x.Users.UserId== user.UserId).ToList();
+            var user = _context.Users.Include(u => u.CategoryLinks).Where(x => x.UserEmail == email).FirstOrDefault();
+            IQueryable<Category> usercats;
+            if(user.UserRole == "Admin")
+            {
+                usercats = from c in _context.Categories
+                               select c;                
+            } 
+            else
+            {
+                usercats = from c in _context.Categories
+                               join cl in user.CategoryLinks on c.CategoryId equals cl.CategoryId
+                               where cl.UserId == user.UserId
+                               select c;
+            }
+            var cats = _context.Categories.Where(x => usercats.Contains(x)).ToList();
             return cats;
         }
 
@@ -48,8 +61,7 @@ namespace DMS.Service
             var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
             Category item = new Category();
             item.CategoryName = Cat.CategoryName;
-            item.UsersUserId = user.UserId;
-           
+                      
             try
             {
                 _context.Categories.Add(item);

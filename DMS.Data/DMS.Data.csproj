@@ -415,6 +415,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Category.cs" />
+    <Compile Include="CategoryUser.cs" />
     <Compile Include="DMSContext.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="DocumentViewModel.cs" />
@@ -422,6 +423,14 @@
     <Compile Include="Migrations\20180721104133_update_00.cs" />
     <Compile Include="Migrations\20180721104133_update_00.designer.cs">
       <DependentUpon>20180721104133_update_00.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210630083138_RemoveCategoryUserRelation.cs" />
+    <Compile Include="Migrations\20210630083138_RemoveCategoryUserRelation.designer.cs">
+      <DependentUpon>20210630083138_RemoveCategoryUserRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210630090136_CategoryUserManyToManyRelation.cs" />
+    <Compile Include="Migrations\20210630090136_CategoryUserManyToManyRelation.designer.cs">
+      <DependentUpon>20210630090136_CategoryUserManyToManyRelation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DMSContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

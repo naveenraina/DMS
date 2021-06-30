@@ -53,9 +53,13 @@ namespace DMS.Controllers
         public IActionResult Create(UserModel user)
         {
             var categories = _categoryService.GetAll();
+            var catuserlinks = user.SelectedCategories.Select(c =>
+            {
+                return new CategoryUser() { CategoryId = c, UserId = user.UserId };
+            });
             var status = _userService.Create(new Data.User() {
                  UserEmail = user.UserEmail, UserName = user.UserName, password = user.password, UserRole = user.UserRole, 
-                Catgories = categories.Where(c => user.SelectedCategories.Contains(c.CategoryId)).ToList()
+                 CategoryLinks = catuserlinks.ToList()
             });
             if (status)
             {

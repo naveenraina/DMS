@@ -6,15 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 namespace DMS.Data
 {
-   public class Category
+   public partial class Category
     {
+        public Category()
+        {
+            this.UserLinks = new HashSet<CategoryUser>();
+        }
 
         [Key]
         public int CategoryId { get; set; }
         [Required]
         public string CategoryName { get; set; }
-        public int UsersUserId { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
-        public virtual User Users { get; set; }
+        public virtual ICollection<CategoryUser> UserLinks { get; set; }
     }
 }

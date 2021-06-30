@@ -50,7 +50,7 @@ namespace DMS.Controllers
         public IActionResult Create()
         {
             var email = HttpContext.Session.GetString("UserEmail");
-            ViewBag.categories = _categoryService.GetAll();
+            ViewBag.categories = _categoryService.GetAll(email);
             return View();
         }
 

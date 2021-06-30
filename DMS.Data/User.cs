@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DMS.Data
 {
-    public class User
+    public partial class User
     {
         public User()
         {
-            this.Catgories = new HashSet<Category>();
+            this.CategoryLinks = new HashSet<CategoryUser>();
             this.Documents = new HashSet<Document>();
         }
         public static ClaimsIdentity Identity { get; set; }
@@ -27,7 +27,7 @@ namespace DMS.Data
         public string password { get; set; }
         [Required]
         public string UserRole { get; set; }
-        public virtual ICollection<Category> Catgories { get; set; }
+        public virtual ICollection<CategoryUser> CategoryLinks { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
     }
 }
