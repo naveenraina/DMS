@@ -65,7 +65,7 @@ namespace DMS.Controllers
                     else if (_user[0].UserRole == "User")
                     {
                         identity.AddClaim(new Claim(ClaimTypes.Role, "User"));
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Document");
                     }
 
                 }
