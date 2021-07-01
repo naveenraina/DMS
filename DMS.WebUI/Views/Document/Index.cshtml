@@ -73,14 +73,7 @@
             </td>
             <td>
                 <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-link">Download</a>
-                @if (item.DocumentPath.EndsWith("mp4"))
-                {
-                    <a href="/Video/@item.DocumentPath" target="_blank" class="btn btn-link">View</a>
-                }
-                else
-                {
-                    <a href="../@item.DocumentPath" target="_blank" class="btn btn-link">View</a>
-                }
+                <a href="../@item.DocumentPath" target="_blank" class="btn btn-link">View</a>
             </td>
         </tr>
         }
