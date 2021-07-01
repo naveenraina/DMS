@@ -48,26 +48,35 @@
                 Category
             </th>
             <th></th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DocumentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DocumentName)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentName) &nbsp; &nbsp;
+                @if (User.IsInRole("Admin"))
+                {
+                    <form style="display:inline">
+                        <input type="submit" name="remove" value="Remove" class="btn btn-outline-danger btn-sm"
+                               formaction="/Document/Remove/@item.DocumentId" formmethod="post" />
+                    </form>
+                }
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-info">Download</a>
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-info">Download</a>
+            </td>
+
+        </tr>
         }
     </tbody>
 </table>

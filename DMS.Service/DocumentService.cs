@@ -150,6 +150,27 @@ namespace DMS.Service
         }
 
         /* 
+         * Delete DOCUMENT
+         */
+        public bool Remove(int documentId)
+        {
+            bool status;
+            var item = _context.Documents.Find(documentId);
+            try
+            {
+                _context.Documents.Remove(item);
+                _context.SaveChanges();
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                var exp = ex;
+                status = false;
+            }
+            return status;
+        }
+
+        /* 
          * GET DOCUMENT NAME
          */
         public string GetName(int userId, int documentId)
