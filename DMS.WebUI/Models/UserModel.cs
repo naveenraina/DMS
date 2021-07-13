@@ -15,5 +15,6 @@ namespace DMS.WebUI.Models
         public string UserRole { get; set; }
         public List<Category> Categories { get; set; }
         public List<int> SelectedCategories { get; set; }
+        public int[] SelectedCategoriesArray { get; set; }
     }
 }

@@ -91,5 +91,61 @@ namespace DMS.Controllers
         }
 
 
+        /*
+         * EDIT USER FORM
+         */
+        public IActionResult Edit(int id)
+        {
+            var categories = _categoryService.GetAll();
+            var user = _userService.Get(id);
+
+            ViewBag.Categories = new MultiSelectList(categories, "CategoryId", "CategoryName");
+
+            var userModel = new UserModel()
+            {
+                UserEmail = user.UserEmail,
+                UserName = user.UserName,
+                password = user.password,
+                UserRole = user.UserRole,
+                UserId = user.UserId,
+                SelectedCategories = user.CategoryLinks.Select(c => c.CategoryId).ToList()
+        };
+
+            return View(userModel);
+        }
+
+        /*
+         * EDIT USER
+         */
+        [HttpPost]
+        public IActionResult Edit(UserModel user)
+        {
+            var categories = _categoryService.GetAll();
+            var catuserlinks = user.SelectedCategories.Select(c =>
+            {
+                return new CategoryUser() { CategoryId = c, UserId = user.UserId };
+            });
+            var status = _userService.Update(new Data.User()
+            {
+                UserId = user.UserId,
+                UserEmail = user.UserEmail,
+                UserName = user.UserName,
+                password = user.password,
+                UserRole = user.UserRole,
+                CategoryLinks = catuserlinks.ToList()
+            });
+            if (status)
+            {
+                ViewBag.success = "Updated successfully";
+            }
+            else
+            {
+                ViewBag.error = "Error Occurred";
+            }
+            ViewBag.Categories = new MultiSelectList(categories, "CategoryId", "CategoryName");
+            return View(user);
+        }
+
+
     }
 }

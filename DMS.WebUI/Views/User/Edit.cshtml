@@ -1,0 +1,105 @@
+﻿@using DMS.Data;
+
+@model DMS.WebUI.Models.UserModel;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var roleList = new SelectList(
+    new List<SelectListItem>
+    {
+        new SelectListItem { Text = "User", Value = "User"},
+        new SelectListItem { Text = "Admin", Value = "Admin"},        
+    }, "Value" , "Text");
+}
+
+<style>
+    input[type=text], input[type=password], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+</style>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item">User </li>
+                    <li class="breadcrumb-item active">Create </li>
+
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <input readonly asp-for="UserId" value="@Model.UserId" style="display:none" />
+            @if (!string.IsNullOrEmpty(ViewBag.success))
+            {
+                <div class="alert alert-success" role="alert">
+                    <strong>Success!</strong> @ViewBag.success.
+                </div>}
+            @if (!string.IsNullOrEmpty(ViewBag.error))
+            {
+                <div class="alert alert-warning" role="alert">
+                    <strong>Failed!</strong> @ViewBag.error.
+                </div>
+            }
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+                <div class="col">
+                    <input asp-for="UserEmail" class="form-control" placeholder="Email" value="@Model.UserEmail" />
+                    <span asp-validation-for="UserEmail" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <input asp-for="UserName" class="form-control" placeholder="Name" value="@Model.UserName" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <input type="password" asp-for="password" class="form-control" placeholder="Password" value="@Model.password" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    @Html.DropDownListFor(m => m.UserRole, roleList, "Select one")
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    @Html.ListBoxFor(m => m.SelectedCategories, (MultiSelectList)ViewBag.Categories, new { multiple = "multiple" })
+                </div>
+
+            </div>
+
+            <br>
+            <div class="form-group">
+                <input type="submit" name="back" value="Back" class="btn btn-outline-success"
+                       formaction="/User" formmethod="get" />
+                <input type="submit" value="Save" class="btn btn-info btn-lg" style="float:right;" />
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+

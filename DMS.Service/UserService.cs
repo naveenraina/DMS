@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DMS.Data;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using Microsoft.EntityFrameworkCore;
 
 namespace DMS.Service
 {
@@ -35,6 +36,15 @@ namespace DMS.Service
         }
 
         /*
+         * GET User by Id
+         */
+        public User Get(int id)
+        {
+            var user = _context.Users.Include(u => u.CategoryLinks).SingleOrDefault(u => u.UserId == id);
+            return user;
+        }
+
+        /*
          * CREATE USER
          */
         public bool Create(User user)
@@ -49,6 +59,35 @@ namespace DMS.Service
             try
             {
                 _context.Users.Add(item);
+                _context.SaveChanges();
+                // SendMail(user.UserName, user.UserEmail,user.password);
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                var exp = ex;
+                status = false;
+            }
+            return status;
+        }
+
+        /*
+         * CREATE USER
+         */
+        public bool Update(User user)
+        {
+            bool status;
+            User item = _context.Users.SingleOrDefault(x => x.UserId == user.UserId);
+            item.UserId = user.UserId;
+            item.UserName = user.UserName;
+            item.UserEmail = user.UserEmail;
+            item.password = user.password;
+            item.UserRole = user.UserRole;
+            item.CategoryLinks = user.CategoryLinks;
+            try
+            {
+                var existingLinks = _context.CategoryUser.Where(x => x.UserId == user.UserId);
+                _context.CategoryUser.RemoveRange(existingLinks);
                 _context.SaveChanges();
                 // SendMail(user.UserName, user.UserEmail,user.password);
                 status = true;

@@ -12,6 +12,7 @@ namespace DMS.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<CategoryUser> CategoryUser { get; set; }        
 
         public DMSContext(DbContextOptions<DMSContext> options) : base(options)
         {
