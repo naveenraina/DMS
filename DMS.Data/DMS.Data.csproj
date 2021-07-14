@@ -432,6 +432,10 @@
     <Compile Include="Migrations\20210630090136_CategoryUserManyToManyRelation.designer.cs">
       <DependentUpon>20210630090136_CategoryUserManyToManyRelation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210714112805_Documents_Add_DateCreated.cs" />
+    <Compile Include="Migrations\20210714112805_Documents_Add_DateCreated.designer.cs">
+      <DependentUpon>20210714112805_Documents_Add_DateCreated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DMSContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />

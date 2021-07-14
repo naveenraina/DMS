@@ -33,7 +33,7 @@ namespace DMS.Service
         /*
          * GET LIST OF DOCUMENTS
          */
-        public async Task<IQueryable<DocumentViewModel>> GetList(string email,string str)
+        public async Task<IQueryable<DocumentViewModel>> GetList(string email, string str)
         {
             var user = _context.Users.Include(u => u.CategoryLinks).Where(x => x.UserEmail == email).FirstOrDefault();
             IQueryable<Category> usercats;
@@ -51,29 +51,31 @@ namespace DMS.Service
             }
 
             var doc = from x in _context.Documents
-                        where usercats.Select(c => c.CategoryId).Contains(x.CategoryId)
-                        select x;
+                      where usercats.Select(c => c.CategoryId).Contains(x.CategoryId)
+                      select x;
             var items = from x in _context.Documents
                         where usercats.Select(c => c.CategoryId).Contains(x.CategoryId)
-                        select new DocumentViewModel
-            {
-                DocumentId = x.DocumentId,
-                DocumentPath = x.DocumentPath,
-                DocumentName = x.DocumentName,
-                CategoryId = x.CategoryId,
-                CategoryName = x.Category.CategoryName
-            };
-            if (!string.IsNullOrEmpty(str))
-            {
-                var searcheditems = from x in doc.Where(x => x.DocumentTags.Contains(str) || x.DocumentName.Contains(str) || x.Category.CategoryName.Contains(str) )
                         select new DocumentViewModel
                         {
                             DocumentId = x.DocumentId,
                             DocumentPath = x.DocumentPath,
                             DocumentName = x.DocumentName,
                             CategoryId = x.CategoryId,
-                            CategoryName = x.Category.CategoryName
+                            CategoryName = x.Category.CategoryName,
+                            DateUploaded = x.DateUploaded
                         };
+            if (!string.IsNullOrEmpty(str))
+            {
+                var searcheditems = from x in doc.Where(x => x.DocumentTags.Contains(str) || x.DocumentName.Contains(str) || x.Category.CategoryName.Contains(str))
+                                    select new DocumentViewModel
+                                    {
+                                        DocumentId = x.DocumentId,
+                                        DocumentPath = x.DocumentPath,
+                                        DocumentName = x.DocumentName,
+                                        CategoryId = x.CategoryId,
+                                        CategoryName = x.Category.CategoryName,
+                                        DateUploaded = x.DateUploaded
+                                    };
                 return searcheditems.AsQueryable();
             }
             return items.AsQueryable();
@@ -82,7 +84,7 @@ namespace DMS.Service
         /*
          * UPLOAD DOCUMENT
          */
-        public Dictionary<string, string> Upload(IFormFile file, string path,Document document,string email)
+        public Dictionary<string, string> Upload(IFormFile file, string path, Document document, string email)
         {
             var response = new Dictionary<string, string>
             {
@@ -91,7 +93,7 @@ namespace DMS.Service
             var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
             string pathRoot = path;
             string filePath = "\\Documents\\uid-" + user.UserId + file.GetFilename();
-            string extention= Path.GetExtension(file.FileName);
+            string extention = Path.GetExtension(file.FileName);
             //var validateExtResponse = this.ValidateExtention(file);
             //var validateFileSizeResponse = this.ValidateExtention(file);
             //if (validateExtResponse["status"] == false)
@@ -108,33 +110,34 @@ namespace DMS.Service
             //    };
             //} else
             //{
-                try
+            try
+            {
+                using (var stream = new FileStream(pathRoot + filePath, FileMode.Create))
                 {
-                    using (var stream = new FileStream(pathRoot+filePath, FileMode.Create))
-                    {
-                        Document item = new Document();
-                        item.DocumentPath = filePath;
-                        item.DocumentName = file.FileName;
-                        item.DocumentTags = file.FileName;//default tags given same as filename will be replaced later
-                        item.CategoryId = document.CategoryId;
-                        item.UsersUserId = user.UserId;
-                        _context.Add(item);
-                        _context.SaveChanges();
-                        file.CopyTo(stream);
-                    }
-                    response = new Dictionary<string, string>
+                    Document item = new Document();
+                    item.DocumentPath = filePath;
+                    item.DocumentName = file.FileName;
+                    item.DocumentTags = file.FileName;//default tags given same as filename will be replaced later
+                    item.CategoryId = document.CategoryId;
+                    item.UsersUserId = user.UserId;
+                    item.DateUploaded = DateTime.Now;
+                    _context.Add(item);
+                    _context.SaveChanges();
+                    file.CopyTo(stream);
+                }
+                response = new Dictionary<string, string>
                     {
                         {"success", "File uploaded successfully."}
                     };
-                }
-                catch (Exception ex)
-                {
-                    var exp = ex;
-                    response = new Dictionary<string, string>
+            }
+            catch (Exception ex)
+            {
+                var exp = ex;
+                response = new Dictionary<string, string>
                     {
                         {"error", "Something went wrong.Try again"}
                     };
-                }
+            }
 
             //}
             return response;
@@ -182,7 +185,7 @@ namespace DMS.Service
         /*
          * DOCUMENT EXT TYPE VALIDATION
          */
-        
+
         public Dictionary<string, bool> ValidateExtention(IFormFile file)
         {
             var response = new Dictionary<string, bool>
@@ -191,7 +194,7 @@ namespace DMS.Service
             };
             string[] allowedTypes = { ".doc", ".docx", ".pdf", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".csv" };
             var isAllowedExtention = Array.Exists(allowedTypes, element => element == Path.GetExtension(file.FileName).ToLower());
-            if(isAllowedExtention)
+            if (isAllowedExtention)
             {
                 response = new Dictionary<string, bool>
                 {
@@ -217,7 +220,7 @@ namespace DMS.Service
                     {"status", false},
                 };
             }
-            
+
             return response;
         }
 

@@ -11,6 +11,7 @@ namespace DMS.Data
         public int DocumentId { get; set; }
         public string DocumentPath { get; set; }
         public string DocumentName { get; set; }
+        public DateTime DateUploaded { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public string CategoryName { get; set; }
     }

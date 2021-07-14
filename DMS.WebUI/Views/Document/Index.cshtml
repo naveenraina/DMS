@@ -47,6 +47,10 @@
             <th>
                 Category
             </th>
+
+            <th>
+                Date
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -70,6 +74,12 @@
 
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @{
+                    string parameterValue = item.DateUploaded != null ? item.DateUploaded.ToString("MMMM dd yyyy") : "";
+                }
+                @Html.DisplayFor(modelItem => parameterValue)
             </td>
             <td>
                 <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-link">Download</a>

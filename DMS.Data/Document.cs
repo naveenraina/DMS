@@ -19,6 +19,7 @@ namespace DMS.Data
         public string DocumentTags { get; set; }
         public int CategoryId { get; set; }
         public int UsersUserId { get; set; }
+        public DateTime DateUploaded { get; set; }
         public virtual Category Category { get; set; }
         public virtual User Users { get; set; }
     }
