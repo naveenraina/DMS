@@ -20,13 +20,42 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
-<form action="/Document/Index" method="get">
-    <div class="form-actions no-color">
-        <p><input type="text" class="form-group" name="str" placeholder="Search Documents.." />
-            <input type="submit" value="Search" class="btn btn-default btn-sm" />
-        </p>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<div class="row">
+    <div class="col">
+        <form action="/Document/Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <input type="text" class="form-group" name="str" value="@ViewBag.searchText" placeholder="Search Documents.." />
+                    <input type="submit" value="Search" class="btn btn-default btn-sm" />
+                </p>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col">
+        <div class="pull-right">
+            <a asp-action="Index"
+                asp-route-page="@(Model.PageIndex - 1)"
+                asp-route-str="@ViewBag.searchText"
+                class="btn btn-default @prevDisabled">
+                Previous
+            </a>
+            <a asp-action="Index"
+                asp-route-page="@(Model.PageIndex + 1)"
+                asp-route-str="@ViewBag.searchText"
+                class="btn btn-default @nextDisabled">
+                Next
+            </a>
+        </div>
+    </div>
+</div>
+    
+
 
 @if (TempData["error"] != null)
 {
@@ -57,51 +86,54 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DocumentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DocumentName) &nbsp; &nbsp;
-                @if (User.IsInRole("Admin"))
-                {
-                    <form style="display:inline">
-                        <input type="submit" name="remove" value="Remove" class="btn btn-outline-danger btn-sm"
-                               formaction="/Document/Remove/@item.DocumentId" formmethod="post" />
-                    </form>
-                }
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentName) &nbsp; &nbsp;
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <form style="display:inline">
+                            <input type="submit" name="remove" value="Remove" class="btn btn-outline-danger btn-sm"
+                                   formaction="/Document/Remove/@item.DocumentId" formmethod="post" />
+                        </form>
+                    }
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                @{
-                    string parameterValue = item.DateUploaded != null ? item.DateUploaded.ToString("MMMM dd yyyy") : "";
-                }
-                @Html.DisplayFor(modelItem => parameterValue)
-            </td>
-            <td>
-                <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-link">Download</a>
-                <a href="../@item.DocumentPath" target="_blank" class="btn btn-link">View</a>
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @{
+                        string parameterValue = item.DateUploaded != null ? item.DateUploaded.ToString("MMMM dd yyyy") : "";
+                    }
+                    @Html.DisplayFor(modelItem => parameterValue)
+                </td>
+                <td>
+                    <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-link">Download</a>
+                    <a href="../@item.DocumentPath" target="_blank" class="btn btn-link">View</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
 
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
-   asp-route-page="@(Model.PageIndex - 1)"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-page="@(Model.PageIndex + 1)"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
+<div class="row">
+    <div class="col">
+        <div class="pull-right">
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex - 1)"
+               asp-route-str="@ViewBag.searchText"
+               class="btn btn-default @prevDisabled">
+                Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex + 1)"
+               asp-route-str="@ViewBag.searchText"
+               class="btn btn-default @nextDisabled">
+                Next
+            </a>
+        </div>
+    </div>
+</div>

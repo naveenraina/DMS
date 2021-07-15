@@ -41,6 +41,7 @@ namespace DMS.Controllers
             var email = HttpContext.Session.GetString("UserEmail");
             var documentList = await _documentService.GetList(email, str);
             int pageSize = 10;
+            ViewBag.searchText = str;
             return View(await PaginatedList<DocumentViewModel>.CreateAsync(documentList.AsNoTracking(), page, pageSize));
         }
 
