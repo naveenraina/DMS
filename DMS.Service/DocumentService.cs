@@ -182,6 +182,37 @@ namespace DMS.Service
             return item.DocumentName;
         }
 
+        /* 
+         * GET DOCUMENT 
+         */
+        public Document GetById(int id)
+        {
+            var item = _context.Documents.Where(x => x.DocumentId == id).FirstOrDefault();
+            return item;
+        }
+
+        /* 
+         * Edit DOCUMENT
+         */
+        public bool Update(Document document)
+        {
+            bool status;
+            var item = _context.Documents.Find(document.DocumentId);
+            try
+            {
+                item.DocumentName = document.DocumentName;
+                item.CategoryId = document.CategoryId;
+                _context.SaveChanges();
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                var exp = ex;
+                status = false;
+            }
+            return status;
+        }
+
         /*
          * DOCUMENT EXT TYPE VALIDATION
          */

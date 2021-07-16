@@ -159,5 +159,27 @@ namespace DMS.Controllers
             };
         }
 
+
+        /*
+         * Edit Get
+         */
+        public IActionResult Edit(int id)
+        {
+            var document = _documentService.GetById(id);
+            var email = HttpContext.Session.GetString("UserEmail");
+            ViewBag.categories = _categoryService.GetAll(email);
+            return View(document);
+        }
+
+        /*
+         * Edit Post
+         */
+        [HttpPost]
+        public IActionResult Edit(Document document)
+        {
+            _documentService.Update(document);
+            return RedirectToAction("Index");
+        }
+
     }
 }

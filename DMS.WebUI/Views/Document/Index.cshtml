@@ -40,21 +40,21 @@
     <div class="col">
         <div class="pull-right">
             <a asp-action="Index"
-                asp-route-page="@(Model.PageIndex - 1)"
-                asp-route-str="@ViewBag.searchText"
-                class="btn btn-default @prevDisabled">
+               asp-route-page="@(Model.PageIndex - 1)"
+               asp-route-str="@ViewBag.searchText"
+               class="btn btn-default @prevDisabled">
                 Previous
             </a>
             <a asp-action="Index"
-                asp-route-page="@(Model.PageIndex + 1)"
-                asp-route-str="@ViewBag.searchText"
-                class="btn btn-default @nextDisabled">
+               asp-route-page="@(Model.PageIndex + 1)"
+               asp-route-str="@ViewBag.searchText"
+               class="btn btn-default @nextDisabled">
                 Next
             </a>
         </div>
     </div>
 </div>
-    
+
 
 
 @if (TempData["error"] != null)
@@ -111,6 +111,10 @@
                     @Html.DisplayFor(modelItem => parameterValue)
                 </td>
                 <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="/Document/Edit/@item.DocumentId" class="btn btn-outline-success">Edit</a>
+                    }
                     <a href="/Document/DownloadAsync/@item.DocumentId" class="btn btn-link">Download</a>
                     <a href="../@item.DocumentPath" target="_blank" class="btn btn-link">View</a>
                 </td>
