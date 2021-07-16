@@ -92,7 +92,7 @@ namespace DMS.Service
             };
             var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
             string pathRoot = path;
-            string filePath = "\\Documents\\uid-" + user.UserId + file.GetFilename();
+            string filePath = "\\Documents\\uid-" + user.UserId + "_" + Guid.NewGuid() + "_" + file.GetFilename() ;
             string extention = Path.GetExtension(file.FileName);
             //var validateExtResponse = this.ValidateExtention(file);
             //var validateFileSizeResponse = this.ValidateExtention(file);
