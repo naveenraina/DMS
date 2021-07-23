@@ -25,7 +25,6 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-
 <div class="row">
     <div class="col">
         <form action="/Document/Index" method="get">
@@ -33,12 +32,17 @@
                 <p>
                     <input type="text" class="form-group" name="str" value="@ViewBag.searchText" placeholder="Search Documents.." />
                     <input type="submit" value="Search" class="btn btn-default btn-sm" />
+                    
+                    @*<a href="~/Document/Create" class="nav-link" style="display:inline">
+                        Upload Document
+                    </a>*@
+                    
                 </p>
             </div>
         </form>
     </div>
     <div class="col">
-        <div class="pull-right">
+        <div class="pull-right">           
             <a asp-action="Index"
                asp-route-page="@(Model.PageIndex - 1)"
                asp-route-str="@ViewBag.searchText"
@@ -54,6 +58,7 @@
         </div>
     </div>
 </div>
+
 
 
 
