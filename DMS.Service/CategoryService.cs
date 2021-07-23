@@ -30,6 +30,15 @@ namespace DMS.Service
         }
 
         /*
+         * GET BY ID
+         */
+        public Category GetById(int id)
+        {
+            var cat = _context.Categories.SingleOrDefault(x => x.CategoryId == id);
+            return cat;
+        }
+
+        /*
          * GET LIST OF CATEGORY for email
          */
         public List<Category> GetAll(string email)
@@ -65,6 +74,27 @@ namespace DMS.Service
             try
             {
                 _context.Categories.Add(item);
+                _context.SaveChanges();
+                status = true;
+            }
+            catch (Exception ex)
+            {
+                var exp = ex;
+                status = false;
+            }
+            return status;
+        }
+
+        /*
+         * UPDATE CATEGORY
+         */
+        public bool UpdateCategory(Category data)
+        {
+            bool status;
+            var cat = _context.Categories.SingleOrDefault(x => x.CategoryId == data.CategoryId);
+            cat.CategoryName = data.CategoryName;
+            try
+            {
                 _context.SaveChanges();
                 status = true;
             }

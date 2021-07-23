@@ -80,5 +80,33 @@ namespace DMS.Controllers
             }
           return RedirectToAction("Index");
         }
+
+        /*
+         * EDIT CATEGORY
+         */
+        public IActionResult Edit(int id)
+        {
+            var category = _categoryService.GetById(id);
+            return View(category);
+        }
+
+        /*
+         * EDIT CATEGORY
+         */
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            var status = _categoryService.UpdateCategory(category);
+            if (status)
+            {
+                ViewBag.success = "Created successfully";
+            }
+            else
+            {
+                ViewBag.error = "Something was wrong.";
+            }
+            return View(category);
+        }
+
     }
 }

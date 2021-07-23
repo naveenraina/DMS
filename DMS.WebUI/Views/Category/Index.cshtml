@@ -31,20 +31,20 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var i in Model)
             {
-                <tr>
-                    <td>@i.CategoryId</td>
-                    <td>@i.CategoryName</td>
-                    <td>
-                       
-                        <a href="/Category/Delete/@i.CategoryId" class="btn btn-danger">delete</a>
-
-                    </td>
-                </tr>
+            <tr>
+                <td>@i.CategoryId</td>
+                <td>@i.CategoryName</td>
+                <td>
+                    <a href="/Category/Edit/@i.CategoryId" class="btn btn-outline-success">Edit</a>
+                    <a href="/Category/Delete/@i.CategoryId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
