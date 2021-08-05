@@ -101,8 +101,8 @@ namespace DMS.Controllers
         public ActionResult Remove(int id)
         {
             int documentId = (int)id;
-            int userId = (int)HttpContext.Session.GetInt32("UserId");
-            _documentService.Remove(documentId);            
+            string pathRoot = _appEnvironment.WebRootPath;
+            _documentService.Remove(documentId, pathRoot);            
             return RedirectToAction("Index");
         }
 

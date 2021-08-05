@@ -155,12 +155,18 @@ namespace DMS.Service
         /* 
          * Delete DOCUMENT
          */
-        public bool Remove(int documentId)
+        public bool Remove(int documentId, string pathRoot)
         {
             bool status;
             var item = _context.Documents.Find(documentId);
             try
             {
+                // Delete existing file
+                if (File.Exists(pathRoot + item.DocumentPath))
+                {
+                    File.Delete(pathRoot + item.DocumentPath);
+                }
+
                 _context.Documents.Remove(item);
                 _context.SaveChanges();
                 status = true;
