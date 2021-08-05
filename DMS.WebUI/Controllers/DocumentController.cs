@@ -175,10 +175,21 @@ namespace DMS.Controllers
          * Edit Post
          */
         [HttpPost]
-        public IActionResult Edit(Document document)
+        public IActionResult Edit(IFormFile file, Document document)
         {
-            _documentService.Update(document);
-            return RedirectToAction("Index");
+            var email = HttpContext.Session.GetString("UserEmail");
+            string pathRoot = _appEnvironment.WebRootPath;
+            var documentUploadRespose = _documentService.Update(file, pathRoot, document, email);
+            if (documentUploadRespose.ContainsKey("error"))
+            {
+                ViewBag.error = documentUploadRespose["error"];
+                return View(document);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
     }

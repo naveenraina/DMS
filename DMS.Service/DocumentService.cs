@@ -194,23 +194,61 @@ namespace DMS.Service
         /* 
          * Edit DOCUMENT
          */
-        public bool Update(Document document)
+        public Dictionary<string, string> Update(IFormFile file, string path, Document document, string email)
         {
-            bool status;
+            var response = new Dictionary<string, string>
+            {
+                {"error", "Something went wrong."}
+            };
             var item = _context.Documents.Find(document.DocumentId);
             try
             {
-                item.DocumentName = document.DocumentName;
+                var user = _context.Users.Where(x => x.UserEmail == email).FirstOrDefault();
+               
+                item.DocumentName = document.DocumentName;               
                 item.CategoryId = document.CategoryId;
-                _context.SaveChanges();
-                status = true;
+                item.UsersUserId = user.UserId;
+
+                if(file != null)
+                {
+                    string pathRoot = path;
+                    string filePath = "\\Documents\\uid-" + user.UserId + "_" + Guid.NewGuid() + "_" + file.GetFilename();
+
+                    // Delete existing file
+                    if (File.Exists(pathRoot + item.DocumentPath))
+                    {
+                        File.Delete(pathRoot + item.DocumentPath);
+                    }
+
+                    using (var stream = new FileStream(pathRoot + filePath, FileMode.Create))
+                    {
+                        item.DocumentPath = filePath;
+                        item.DocumentTags = file.FileName;//default tags given same as filename will be replaced later
+                        item.DateUploaded = DateTime.Now;
+                        _context.SaveChanges();
+                        file.CopyTo(stream);
+                    }
+
+                }
+                else
+                {
+                    _context.SaveChanges();
+                }
+                
+
+                response = new Dictionary<string, string>
+                    {
+                        {"success", "File uploaded successfully."}
+                    };
             }
             catch (Exception ex)
             {
-                var exp = ex;
-                status = false;
+                response = new Dictionary<string, string>
+                {
+                    {"error", ex.ToString()}
+                };
             }
-            return status;
+            return response;
         }
 
         /*
