@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Security.Claims;
 using DMS.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -59,6 +60,7 @@ namespace DMS
                 {
                     policy.RequireClaim(ClaimTypes.Role, "User");
                 });
+
             });
 
 
@@ -79,7 +81,25 @@ namespace DMS
                 app.UseExceptionHandler("/Auth/Error");
             }
             app.UseAuthentication();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    if (!ctx.Context.User.Identity.IsAuthenticated && ctx.Context.Request.Path.Value.Contains("/Documents/"))
+                    {
+                        // respond HTTP 401 Unauthorized, and...
+                        //ctx.Context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+
+                        ctx.Context.Response.Redirect("/");
+
+                        // Append following 2 lines to drop body from static files middleware!
+                        ctx.Context.Response.ContentLength = 0;
+                        ctx.Context.Response.Body = Stream.Null;
+
+                        ctx.Context.Response.Headers.Add("Cache-Control", "no-store");
+                    }
+                }
+            });
             app.UseSession();
             app.UseMvc(routes =>
             {
