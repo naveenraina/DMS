@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Dictionary<string, int> stats = ViewBag.Stats;
 }
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -29,7 +31,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>@stats["Total"]</h3>
 
                         <p>Documents</p>
                     </div>
@@ -40,12 +42,64 @@
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
+
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@stats["LastQuarter"]</h3>
+
+                        <p>Documents Last Quarter</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@stats["LastMonth"]</h3>
+
+                        <p>Documents Last Month</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@stats["LastWeek"]</h3>
+
+                        <p>Documents Last Week</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px"></sup></h3>
+                        <h3>@ViewBag.CatCount<sup style="font-size: 20px"></sup></h3>
 
                         <p>Categories </p>
                     </div>
@@ -59,41 +113,24 @@
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-warning">
+                <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>@ViewBag.UserCount<sup style="font-size: 20px"></sup></h3>
 
-                        <p>Documents</p>
+                        <p>Users </p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                        <i class="fa fa-users" aria-hidden="true"></i>
 
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>65</h3>
-
-                        <p>Categories</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-plug" aria-hidden="true"></i>
-
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
         </div>
-        <!-- /.row -->
-        <!-- Main row -->
-        <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
+            <!-- /.row -->
+            <!-- Main row -->
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
 </section>
 
 <!-- /.content -->

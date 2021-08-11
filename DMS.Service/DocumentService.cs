@@ -312,5 +312,15 @@ namespace DMS.Service
             }
             return response;
         }
+
+        public Dictionary<string, int> GetStats()
+        {
+            var result = new Dictionary<string, int>();
+            result.Add("Total", _context.Documents.Count());
+            result.Add("LastWeek", _context.Documents.Where(d => d.DateUploaded > DateTime.Now.AddDays(-7)).Count());
+            result.Add("LastMonth", _context.Documents.Where(d => d.DateUploaded > DateTime.Now.AddDays(-30)).Count());
+            result.Add("LastQuarter", _context.Documents.Where(d => d.DateUploaded > DateTime.Now.AddDays(-120)).Count());
+            return result;
+        }
     }
 }

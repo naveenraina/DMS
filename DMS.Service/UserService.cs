@@ -34,6 +34,11 @@ namespace DMS.Service
             var _users = _context.Users.ToList();
             return _users;
         }
+        public int TotalCount()
+        {
+            return _context.Users.Count();
+        }
+
 
         /*
          * GET User by Id

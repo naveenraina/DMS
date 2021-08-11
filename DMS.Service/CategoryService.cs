@@ -38,6 +38,12 @@ namespace DMS.Service
             return cat;
         }
 
+        public int TotalCount()
+        {
+            return _context.Categories.Count();
+        }
+
+
         /*
          * GET LIST OF CATEGORY for email
          */

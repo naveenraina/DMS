@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace DMS.Controllers
 {
@@ -20,11 +22,25 @@ namespace DMS.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+
+        private readonly DocumentService _documentService;
+        private CategoryService _categoryService;
+        private UserService _userService;
+        public HomeController(DMSContext context, IConfiguration _config)
+        {
+            _documentService = new DocumentService(context);
+            _categoryService = new CategoryService(context);
+            _userService = new UserService(context, _config);
+        }
+
         /*
          * HOMEPAGE
          */
         public IActionResult Index()
         {
+            ViewBag.Stats = _documentService.GetStats();
+            ViewBag.CatCount = _categoryService.TotalCount();
+            ViewBag.UserCount = _userService.TotalCount();
             return View();
         }
 
