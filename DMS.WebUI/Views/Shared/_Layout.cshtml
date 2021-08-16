@@ -30,6 +30,13 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+
+@{ 
+    var canEditDocument = User.Claims?.FirstOrDefault(x => x.Type.Equals("CanEditDocument", StringComparison.OrdinalIgnoreCase))?.Value;
+    var canRemoveDocument = User.Claims?.FirstOrDefault(x => x.Type.Equals("CanRemoveDocument", StringComparison.OrdinalIgnoreCase))?.Value;
+    var canEditCategory = User.Claims?.FirstOrDefault(x => x.Type.Equals("CanEditCategory", StringComparison.OrdinalIgnoreCase))?.Value;
+}
+
 <body class="hold-transition sidebar-mini" id="container">
     <div>
         <div class="wrapper">

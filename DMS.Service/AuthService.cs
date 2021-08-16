@@ -34,6 +34,7 @@ namespace DMS.Service
                 UserName = x.UserName,
                 UserEmail=x.UserEmail,
                 UserRole=x.UserRole,
+                Permissions=x.Permissions
             }).ToList();
         }
     }

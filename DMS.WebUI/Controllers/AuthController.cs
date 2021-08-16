@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using DMS.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using DMS.WebUI.Logic;
 
 namespace DMS.Controllers
 {
@@ -53,6 +54,7 @@ namespace DMS.Controllers
                     identity.AddClaim(new Claim(ClaimTypes.Name, _user[0].UserName.ToString()));
                     identity.AddClaim(new Claim(ClaimTypes.Role, _user[0].UserRole));
                     identity.AddClaim(new Claim(ClaimTypes.Email, _user[0].UserEmail));
+                    identity.AddClaim(new Claim("CanEditDocument", Permission.GetPermission(_user[0].Permissions, Permission.UserPermission.CanEditDocument).ToString()));
                     HttpContext.Session.SetString("UserEmail", _user[0].UserEmail);
                     HttpContext.Session.SetInt32("UserId", _user[0].UserId);
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));

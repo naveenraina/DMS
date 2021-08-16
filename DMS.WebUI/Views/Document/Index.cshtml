@@ -23,6 +23,8 @@
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var canEditDocument = User.Claims?.FirstOrDefault(x => x.Type.Equals("CanEditDocument", StringComparison.OrdinalIgnoreCase))?.Value;
+    
 }
 
 <div class="row">
@@ -116,7 +118,7 @@
                     @Html.DisplayFor(modelItem => parameterValue)
                 </td>
                 <td>
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin") || Convert.ToBoolean(canEditDocument))
                     {
                         <a href="/Document/Edit/@item.DocumentId" class="btn btn-outline-success">Edit</a>
                     }
