@@ -60,6 +60,7 @@ namespace DMS.Service
             item.UserEmail = user.UserEmail;
             item.password = user.password;
             item.UserRole = user.UserRole;
+            item.Permissions = user.Permissions;
             item.CategoryLinks = user.CategoryLinks;
             try
             {
@@ -88,6 +89,7 @@ namespace DMS.Service
             item.UserEmail = user.UserEmail;
             item.password = user.password;
             item.UserRole = user.UserRole;
+            item.Permissions = user.Permissions;
             item.CategoryLinks = user.CategoryLinks;
             try
             {

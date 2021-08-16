@@ -27,6 +27,7 @@ namespace DMS.Data
         public string password { get; set; }
         [Required]
         public string UserRole { get; set; }
+        public string Permissions { get; set; }
         public virtual ICollection<CategoryUser> CategoryLinks { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
     }

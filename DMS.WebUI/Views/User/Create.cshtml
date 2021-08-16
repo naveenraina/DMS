@@ -76,7 +76,42 @@
 
             </div>
             <br>
-            <div class="row">                
+            <div class="row">
+                <div class="col">
+                    <strong>Document</strong>
+                </div>
+                <div class="col">
+                    <strong>Category</strong>
+                </div>
+                <div class="col">
+                    <strong>User</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="margin-right: 28px;">Edit</span>  <input asp-for="CanEditDocument" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+                <div class="col">
+                    <span style="margin-right: 28px;">Edit</span> <input asp-for="CanEditCategory" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+                <div class="col">
+                    <span style="margin-right: 28px;">Edit</span> <input asp-for="CanEditUser" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span>Remove</span> <input asp-for="CanRemoveDocument" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+                <div class="col">
+                    <span>Remove</span> <input asp-for="CanRemoveCategory" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+
+                <div class="col">
+                    <span>Remove</span> <input asp-for="CanRemoveUser" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+            </div>
+            <br>
+            <div class="row">
                 <div class="col">
                     @Html.DropDownList("SelectedCategories", (MultiSelectList)ViewBag.Categories, new { multiple = "multiple" })
                 </div>
@@ -84,7 +119,7 @@
             </div>
 
             <br>
-            <div class="form-group">                
+            <div class="form-group">
                 <input type="submit" name="back" value="Back" class="btn btn-outline-success"
                        formaction="/User" formmethod="get" />
                 <input type="submit" value="Create" class="btn btn-info btn-lg" style="float:right;" />

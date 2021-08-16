@@ -55,7 +55,7 @@
                     <strong>Failed!</strong> @ViewBag.error.
                 </div>
             }
-            
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="row">
@@ -79,6 +79,41 @@
                     @Html.DropDownListFor(m => m.UserRole, roleList, "Select one")
                 </div>
 
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <strong>Document</strong>
+                </div>
+                <div class="col">
+                    <strong>Category</strong>
+                </div>
+                <div class="col">
+                    <strong>User</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="margin-right: 28px;">Edit</span> <input asp-for="CanEditDocument" checked="@Model.CanEditDocument" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+                <div class="col">
+                    <span style="margin-right: 28px;">Edit</span> <input asp-for="CanEditCategory" checked="@Model.CanEditCategory" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+                <div class="col">
+                    <span style="margin-right: 28px;">Edit</span> <input asp-for="CanEditUser" checked="@Model.CanEditUser" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span>Remove</span> <input asp-for="CanRemoveDocument" checked="@Model.CanRemoveDocument" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+                <div class="col">
+                    <span>Remove</span> <input asp-for="CanRemoveCategory" checked="@Model.CanRemoveCategory" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
+
+                <div class="col">
+                    <span>Remove</span> <input asp-for="CanRemoveUser" checked="@Model.CanRemoveUser" class="form-control" placeholder="" style="display:inline;width:40px" />
+                </div>
             </div>
             <br>
             <div class="row">

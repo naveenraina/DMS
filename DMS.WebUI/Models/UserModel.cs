@@ -16,5 +16,12 @@ namespace DMS.WebUI.Models
         public List<Category> Categories { get; set; }
         public List<int> SelectedCategories { get; set; }
         public int[] SelectedCategoriesArray { get; set; }
+
+        public bool CanEditDocument { get; set; }
+        public bool CanRemoveDocument { get; set; }
+        public bool CanEditCategory{ get; set; }
+        public bool CanRemoveCategory { get; set; }
+        public bool CanEditUser{ get; set; }
+        public bool CanRemoveUser { get; set; }
     }
 }

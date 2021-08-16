@@ -436,6 +436,10 @@
     <Compile Include="Migrations\20210714112805_Documents_Add_DateCreated.designer.cs">
       <DependentUpon>20210714112805_Documents_Add_DateCreated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210816093807_User-Table-Permissions-Column.cs" />
+    <Compile Include="Migrations\20210816093807_User-Table-Permissions-Column.designer.cs">
+      <DependentUpon>20210816093807_User-Table-Permissions-Column.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DMSContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs" />
